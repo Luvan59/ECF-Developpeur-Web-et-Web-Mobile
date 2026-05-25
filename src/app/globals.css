@@ -5,22 +5,95 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.HeaderMain {
+  font-size: 1rem;
+  height: 5.625rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  padding-left: 1rem;
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+}
+
+.HeaderButtons {
+  display: flex;
+  align-items: center;
+}
+
+.HeaderButton {
+  display: flex;
+  padding-right: 2.5rem;
+  cursor: pointer;
+  color: white;
+  align-items: center;
+}
+
+.HeaderButton:hover {
+  display: flex;
+  padding-right: 2.5rem;
+  align-items: center;
+  color: #ffb640;
+}
+
+.FooterMain {
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  height: auto;
+  width: 100%;
+  padding: 0;
+  display: grid;
+  padding-right: 1.563rem;
+  padding-left: 1.563rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+.FooterMain h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.FooterMain h3 {
+  font-size: 0.875rem;
+  color: #8b8b8b;
+  font-weight: normal;
+}
+
+.FooterContact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  align-items: left;
+}
+
+.FooterNavigation {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  align-items: center;
+}
+
+.FooterHours {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  align-items: center;
+}
+
+.FooterButton {
+  color: #8b8b8b;
+  cursor: pointer;
+}
+
+.FooterButton:hover {
+  color: #ffb640;
 }
