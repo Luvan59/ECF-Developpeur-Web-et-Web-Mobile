@@ -27,38 +27,40 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <header>
-        <div className="HeaderMain">
-          <h1>Vite & Gourmand</h1>
-          <div className="HeaderButtons">
-            <h1 className="HeaderButton">Acceuil </h1>
-            <h1 className="HeaderButton">Menu </h1>
-            <h1 className="HeaderButton">Contact</h1>
-            <h1 className="HeaderButton">Se Connecter</h1>
+      <body className="min-h-screen flex flex-col">
+        <header>
+          <div className="HeaderMain">
+            <h1>Vite & Gourmand</h1>
+            <div className="HeaderButtons">
+              <h1 className="HeaderButton">Acceuil </h1>
+              <h1 className="HeaderButton">Menu </h1>
+              <h1 className="HeaderButton">Contact</h1>
+              <h1 className="HeaderButton">Se Connecter</h1>
+            </div>
           </div>
-        </div>
-      </header>
-      <body className="min-h-full flex flex-col">{children}</body>
-      <footer className="FooterMain">
-        <div className="FooterContact">
-          <h1>Nous Contactez</h1>
-          <h3>Tel: **.**.**.**.**</h3>
-          <h3>Email: Vite&Gourmand@gmail.com</h3>
-          <h3 className="FooterButton">Contact</h3>
-        </div>
-        <div className="FooterNavigation">
-          <h1>Navigation</h1>
-          <h3 className="FooterButton">Avis</h3>
-          <h3 className="FooterButton">Menu</h3>
-          <h3 className="FooterButton">Conditions générale</h3>
-          <h3 className="FooterButton">Mention Legal</h3>
-        </div>
-        <div className="FooterHours">
-          <h1>Horaires</h1>
-          <h3>Lundi au Vendredi 12h/14h</h3>
-          <h3>Samedi au Dimanche 18h/22h</h3>
-        </div>
-      </footer>
+        </header>
+        <main className="flex-1">{children}</main>
+        <footer className="FooterMain">
+          <div className="FooterContact">
+            <h1>Nous Contactez</h1>
+            <h3>Tel: **.**.**.**.**</h3>
+            <h3>Email: Vite&Gourmand@gmail.com</h3>
+            <h3 className="FooterButton">Contact</h3>
+          </div>
+          <div className="FooterNavigation">
+            <h1>Navigation</h1>
+            <h3 className="FooterButton">Avis</h3>
+            <h3 className="FooterButton">Menu</h3>
+            <h3 className="FooterButton">Conditions générale</h3>
+            <h3 className="FooterButton">Mention Legal</h3>
+          </div>
+          <div className="FooterHours">
+            <h1>Horaires</h1>
+            <h3>Lundi au Vendredi 12h/14h</h3>
+            <h3>Samedi au Dimanche 18h/22h</h3>
+          </div>
+        </footer>
+      </body>
     </html>
   );
 }

@@ -97,3 +97,102 @@ body {
 .FooterButton:hover {
   color: #ffb640;
 }
+
+.CompagnyComment {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 35% 65%;
+  justify-items: center;
+  align-items: stretch;
+  gap: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.AboutCompagny,
+.CompanyDescription {
+  background-color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  gap: 1rem;
+  width: 100%;
+  min-height: 25rem;
+  height: auto;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  overflow-wrap: break-word;
+  padding-bottom: 5rem;
+}
+
+.AboutCompagny h1,
+.CompanyDescription h1,
+.CommentBoard h1 {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 1rem;
+  color: #ff9d00;
+}
+
+.ClientComments {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  width: 100%;
+}
+
+.CommentBoard {
+  background-color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.5rem;
+  gap: 1rem;
+  padding: 2rem;
+  width: 95%;
+  height: auto;
+  color: rgb(255, 255, 255);
+}
+
+.Buttonfill {
+  background-color: #ff9d00;
+  color: white;
+  font-size: 1.375rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.CommentsGrid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, 2fr);
+  gap: 1rem;
+}
+
+.ClientCard {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  border-radius: 0.5rem;
+  min-height: 10rem;
+  padding: 0.5rem;
+  height: auto;
+}
+
+.CommentSection {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  gap: 0.5rem;
+}
