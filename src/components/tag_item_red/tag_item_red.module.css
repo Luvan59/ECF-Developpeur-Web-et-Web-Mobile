@@ -1,0 +1,15 @@
+.ItemRed {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #ff26004d;
+  color: #c30000;
+  border-radius: 0.5rem;
+  padding: 5px;
+  min-width: 80px;
+}
+
+.ItemRedImage {
+  width: auto;
+  height: auto;
+}

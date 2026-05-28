@@ -1,0 +1,54 @@
+.filter-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  align-items: left;
+  justify-content: left;
+}
+
+.filter-options {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.filter-group {
+  display: flex;
+  font-size: 0.875rem;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.375rem;
+}
+
+.filter-toggle-button {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  width: auto;
+  min-width: 150px;
+  background-color: #ffffff;
+  color: #00000080;
+  cursor: pointer;
+}
+
+.filter-toggle-button:hover {
+  background-color: #ffb640;
+}
+
+.price-label {
+  display: block;
+  width: 10rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}

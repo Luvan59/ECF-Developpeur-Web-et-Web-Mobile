@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Buttonfill from "@/components/buttonfill";
+import Buttonfill from "@/components/buttonfill/buttonfill";
 import { comments } from "@/data/comments";
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
     .slice(0, 4);
 
   return (
-    <div className="h-full">
+    <div className="h-full font-family-Inter">
       <div className="relative w-full h-64">
         <Image
           src="/assets/RestaurantECF.jpg"
@@ -86,7 +86,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <Buttonfill text="Tous les Messages" />
+            <Buttonfill text="Tous les Messages" fontsize="1.375rem" />
           </div>
         </div>
       </main>

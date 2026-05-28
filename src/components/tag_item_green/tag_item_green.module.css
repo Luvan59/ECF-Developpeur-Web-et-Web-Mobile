@@ -1,0 +1,15 @@
+.ItemGreen {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #2bff0052;
+  color: #009d34;
+  border-radius: 0.5rem;
+  padding: 5px;
+  min-width: 80px;
+}
+
+.ItemGreenImage {
+  width: auto;
+  height: auto;
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,15 +28,23 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col font-family-Inter">
         <header>
           <div className="HeaderMain">
             <h1>Vite & Gourmand</h1>
             <div className="HeaderButtons">
-              <h1 className="HeaderButton">Acceuil </h1>
-              <h1 className="HeaderButton">Menu </h1>
-              <h1 className="HeaderButton">Contact</h1>
-              <h1 className="HeaderButton">Se Connecter</h1>
+              <Link href="/">
+                <h1 className="HeaderButton">Acceuil </h1>
+              </Link>
+              <Link href="/menu">
+                <h1 className="HeaderButton">Menu </h1>
+              </Link>
+              <Link href="/contact">
+                <h1 className="HeaderButton">Contact</h1>
+              </Link>
+              <Link href="/login">
+                <h1 className="HeaderButton">Se Connecter</h1>
+              </Link>
             </div>
           </div>
         </header>
@@ -50,7 +59,9 @@ export default function RootLayout({
           <div className="FooterNavigation">
             <h1>Navigation</h1>
             <h3 className="FooterButton">Avis</h3>
-            <h3 className="FooterButton">Menu</h3>
+            <Link href="/menu">
+              <h3 className="FooterButton">Menu</h3>
+            </Link>
             <h3 className="FooterButton">Conditions générale</h3>
             <h3 className="FooterButton">Mention Legal</h3>
           </div>
