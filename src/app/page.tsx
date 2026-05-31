@@ -18,7 +18,7 @@ export default function Home() {
           className="object-cover"
         />
       </div>
-      <main className="">
+      <main className="MainContainer">
         <div className="CompagnyComment">
           <div className="AboutCompagny">
             <h1>A propos de nous</h1>

@@ -12,6 +12,7 @@ CREATE TABLE "Utilisateur" (
     "email" VARCHAR(50) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
     "prenom" VARCHAR(50) NOT NULL,
+    "nom" VARCHAR(50) NOT NULL,
     "telephone" VARCHAR(50) NOT NULL,
     "ville" VARCHAR(50) NOT NULL,
     "pays" VARCHAR(50) NOT NULL,

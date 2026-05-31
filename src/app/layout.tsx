@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { Toaster } from "react-hot-toast";
+import UserButton from "@/components/userbutton/UserButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,13 +44,19 @@ export default function RootLayout({
               <Link href="/contact">
                 <h1 className="HeaderButton">Contact</h1>
               </Link>
-              <Link href="/login">
-                <h1 className="HeaderButton">Se Connecter</h1>
-              </Link>
+              <UserButton />
             </div>
           </div>
         </header>
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          {children}
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 3000,
+            }}
+          />
+        </main>
         <footer className="FooterMain">
           <div className="FooterContact">
             <h1>Nous Contactez</h1>

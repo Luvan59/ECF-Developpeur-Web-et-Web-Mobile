@@ -1,0 +1,16 @@
+.ButtonEmpty {
+  background-color: #ff9d0000;
+  border-color: #ff9d00;
+  border: 1px solid;
+  color: #ff9d00;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.ButtonEmpty:hover {
+  background-color: #ffb640;
+  border-color: #ffb640;
+  color: white;
+}

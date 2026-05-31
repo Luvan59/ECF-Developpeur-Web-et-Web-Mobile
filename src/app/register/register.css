@@ -1,0 +1,164 @@
+.FormContainer {
+  display: flex;
+  width: 100%;
+  align-items: left;
+  justify-content: center;
+  padding: 20px;
+}
+.Formulaire {
+  display: flex;
+  gap: 10px;
+  border: 1px solid;
+  border-radius: 15px;
+  border-color: black;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  padding: 20px;
+  width: 50%;
+  height: auto;
+}
+
+.Formulaire h1 {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.InputBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.InputBox h2 {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.InputBox input {
+  display: flex;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid;
+  height: 35px;
+  padding: 5px;
+}
+
+.PhoneNumberInputBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.PhoneNumberInputBox h2 {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.PhoneNumberInputBox input {
+  display: flex;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid;
+  height: 35px;
+  padding: 5px;
+}
+
+.PhoneNumberInputBox select {
+  display: flex;
+  width: 100px;
+  border-radius: 5px;
+  border: 1px solid;
+  cursor: pointer;
+}
+
+.PhoneInput {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.passwordBox {
+  position: relative;
+  width: 100%;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.passwordBox input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  height: 35px;
+}
+
+.passwordBox button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.PasswordSection {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.PasswordSection h2 {
+  font-weight: bold;
+  font-size: 16px;
+}
+.PasswordSection p {
+  font-size: 14px;
+  color: #00000080;
+}
+
+.ButtonSubmit {
+  background-color: #ff9d0000;
+  border-color: #ff9d00;
+  border: 1px solid;
+  color: #ff9d00;
+  font-weight: bold;
+  height: 70px;
+  width: 160px;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.ButtonSubmit:hover {
+  background-color: #ffb640;
+  border-color: #ffb640;
+  color: white;
+}
+
+.SuccessMessage {
+  background-color: #e7f8ed;
+  color: #137333;
+  border: 1px solid #9ad8b3;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.ErrorMessage {
+  background-color: #fdeaea;
+  color: #b00020;
+  border: 1px solid #f5a3a3;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.input-error {
+  border: 2px solid #e53935 !important;
+  background-color: #fff5f5;
+  transition: 0.2s;
+}
+
+.input-valid {
+  border: 2px solid #43a047 !important;
+  background-color: #f3fff3;
+  transition: 0.2s;
+}
