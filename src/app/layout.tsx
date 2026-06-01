@@ -70,8 +70,12 @@ export default function RootLayout({
             <Link href="/menu">
               <h3 className="FooterButton">Menu</h3>
             </Link>
-            <h3 className="FooterButton">Conditions générale</h3>
-            <h3 className="FooterButton">Mention Legal</h3>
+            <Link href="/conditions-generales">
+              <h3 className="FooterButton">Conditions générale</h3>
+            </Link>
+            <Link href="/mentions-legales">
+              <h3 className="FooterButton">Mentions Légales</h3>
+            </Link>
           </div>
           <div className="FooterHours">
             <h1>Horaires</h1>
