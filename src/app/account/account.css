@@ -1,0 +1,312 @@
+.AccountPage {
+  width: 100%;
+  min-height: 80vh;
+  padding: 3rem 2rem;
+  background-color: white;
+  color: black;
+}
+
+.AccountHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.AccountHeader h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff9d00;
+}
+
+.AccountHeader p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.AccountGrid {
+  display: grid;
+  grid-template-columns: 38% 62%;
+  gap: 2rem;
+}
+
+.AccountCard {
+  background-color: black;
+  color: white;
+  border-radius: 14px;
+  padding: 2rem;
+  min-height: 420px;
+}
+
+.AccountCard h2 {
+  color: #ff9d00;
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 1.8rem;
+}
+
+.UserInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.UserInfo div {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+
+.UserInfo strong {
+  color: #ffb640;
+}
+
+.UserInfo span {
+  background-color: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.UserInfo input {
+  width: 100%;
+  height: 45px;
+  border: 1px solid #ff9d00;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background-color: white;
+  color: black;
+  outline: none;
+}
+
+.UserInfo input:focus {
+  border: 2px solid #ffb640;
+}
+
+.AccountButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 2rem;
+}
+
+.AccountButton,
+.AccountButtonCancel,
+.OrderActions button {
+  height: 50px;
+  padding: 0 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.AccountButton,
+.OrderActions button {
+  border: 1px solid #ff9d00;
+  background-color: white;
+  color: #ff9d00;
+}
+
+.AccountButton:hover,
+.OrderActions button:hover {
+  background-color: #ff9d00;
+  color: white;
+}
+
+.AccountButtonCancel {
+  border: 1px solid #c5221f;
+  background-color: white;
+  color: #c5221f;
+}
+
+.AccountButtonCancel:hover {
+  background-color: #c5221f;
+  color: white;
+}
+
+.OrdersList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.OrderCard {
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.OrderTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.OrderTop h3 {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.Status {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  background-color: #eee;
+}
+
+.Status.accepté {
+  background-color: #e7f8ed;
+  color: #137333;
+}
+
+.Status.en-attente {
+  background-color: #fff4d6;
+  color: #a16200;
+}
+
+.Status.terminée {
+  background-color: #e8f0fe;
+  color: #174ea6;
+}
+
+.OrderActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.CancelButton {
+  border-color: #c5221f !important;
+  color: #c5221f !important;
+  border: 1px solid #c5221f !important;
+  padding: 10px 20px !important;
+  border-radius: 8px;
+}
+
+.CancelButton:hover {
+  background-color: #c5221f !important;
+  color: white !important;
+}
+
+.ReviewButton {
+  border-color: #137333 !important;
+  color: #137333 !important;
+  border: 1px solid #137333 !important;
+  border-radius: 8px;
+  padding: 10px 20px !important;
+}
+
+.ReviewButton:hover {
+  background-color: #137333 !important;
+  color: white !important;
+}
+
+.TrackingBox {
+  margin-top: 1rem;
+  background-color: #f7f7f7;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.TrackingBox h4 {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.TrackingBox ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.NoOrdersMessage {
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.AccountModalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.AccountModal {
+  position: relative;
+  width: 500px;
+  max-width: 90%;
+  background-color: white;
+  color: black;
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.AccountModal h2 {
+  color: #ff9d00;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.AccountModalClose {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.ModalTrackingList {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.ModalActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.ReviewForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ReviewForm label {
+  font-weight: bold;
+}
+
+.ReviewForm select,
+.ReviewForm textarea {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.ReviewForm textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+@media (max-width: 900px) {
+  .AccountGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .UserInfo div {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+}

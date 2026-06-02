@@ -62,11 +62,15 @@ export default function RootLayout({
             <h1>Nous Contactez</h1>
             <h3>Tel: **.**.**.**.**</h3>
             <h3>Email: Vite&Gourmand@gmail.com</h3>
-            <h3 className="FooterButton">Contact</h3>
+            <Link href="/contact">
+              <h3 className="FooterButton">Contact</h3>
+            </Link>
           </div>
           <div className="FooterNavigation">
             <h1>Navigation</h1>
-            <h3 className="FooterButton">Avis</h3>
+            <Link href="/avis">
+              <h3 className="FooterButton">Avis</h3>
+            </Link>
             <Link href="/menu">
               <h3 className="FooterButton">Menu</h3>
             </Link>

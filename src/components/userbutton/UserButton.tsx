@@ -79,7 +79,6 @@ export default function UserButton() {
           {user.role === "USER" && (
             <>
               <Link href="/account">Mon espace</Link>
-              <Link href="/account/orders">Mes commandes</Link>
             </>
           )}
 

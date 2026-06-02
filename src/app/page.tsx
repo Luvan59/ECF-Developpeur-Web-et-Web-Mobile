@@ -1,11 +1,26 @@
+"use client";
+
 import Image from "next/image";
 import Buttonfill from "@/components/buttonfill/buttonfill";
-import { comments } from "@/data/comments";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const validatedComments = comments
-    .filter((comment) => comment.validated)
-    .slice(0, 4);
+  const [validatedComments, setValidatedComments] = useState<any[]>([]);
+
+  useEffect(() => {
+    const getReviews = async () => {
+      const response = await fetch("/api/reviews/top");
+
+      if (!response.ok) {
+        return;
+      }
+
+      const data = await response.json();
+      setValidatedComments(data);
+    };
+
+    getReviews();
+  }, []);
 
   return (
     <div className="h-full font-family-Inter">
@@ -77,14 +92,32 @@ export default function Home() {
           <div className="CommentBoard">
             <h1>Avis Clients</h1>
             <div className="CommentsGrid">
-              {validatedComments.map((comment) => (
-                <div key={comment.id} className="ClientCard">
-                  {comment.user} {comment.date}
-                  <div className="CommentSection">
-                    <p>{comment.comment}</p>
-                  </div>
+              {validatedComments.length === 0 ? (
+                <div className="NoCommentsCard">
+                  <h3>Aucun avis disponible</h3>
+                  <p>
+                    Soyez le premier à partager votre expérience avec Vite &
+                    Gourmand.
+                  </p>
                 </div>
-              ))}
+              ) : (
+                validatedComments.map((comment) => (
+                  <div key={comment.id} className="ClientCard">
+                    <div className="CommentHeader">
+                      <strong>{comment.user}</strong>
+
+                      <div className="CommentStars">
+                        {"★".repeat(comment.note)}
+                        {"☆".repeat(5 - comment.note)}
+                      </div>
+                    </div>
+
+                    <div className="CommentSection">
+                      <p>{comment.comment}</p>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
             <Buttonfill text="Tous les Messages" fontsize="1.375rem" />
           </div>

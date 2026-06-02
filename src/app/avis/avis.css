@@ -1,0 +1,84 @@
+.AvisPage {
+  width: 100%;
+  min-height: 80vh;
+  padding: 3rem 2rem;
+  background-color: white;
+  color: black;
+}
+
+.AvisContainer {
+  max-width: 1100px;
+  margin: 0 auto;
+  background-color: black;
+  color: white;
+  border-radius: 14px;
+  padding: 2rem;
+}
+
+.AvisContainer h1 {
+  color: #ff9d00;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.AvisIntro {
+  text-align: center;
+  color: #ccc;
+  margin: 1rem 0 2rem;
+}
+
+.AvisGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.AvisCard {
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  padding: 1.2rem;
+  min-height: 180px;
+}
+
+.AvisTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.AvisTop h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.AvisTop span {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.AvisNote {
+  color: #ff9d00;
+  font-size: 1.4rem;
+  margin: 0.8rem 0;
+}
+
+.AvisCard p {
+  font-weight: bold;
+}
+
+.NoAvisMessage {
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+@media (max-width: 900px) {
+  .AvisGrid {
+    grid-template-columns: 1fr;
+  }
+}

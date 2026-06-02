@@ -70,8 +70,19 @@ model Commande {
   utilisateur_id Int
   utilisateur    Utilisateur @relation(fields: [utilisateur_id], references: [utilisateur_id])
 
+  statusHistory OrderStatusHistory[]
+
   menu_id Int
   menu    Menu @relation(fields: [menu_id], references: [menu_id])
+}
+
+model OrderStatusHistory {
+  id        Int      @id @default(autoincrement())
+  status    String   @db.VarChar(50)
+  createdAt DateTime @default(now())
+
+  orderId Int
+  order   Commande @relation(fields: [orderId], references: [commande_id], onDelete: Cascade)
 }
 
 model Menu {
