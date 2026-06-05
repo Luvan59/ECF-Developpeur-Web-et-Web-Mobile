@@ -44,11 +44,22 @@ model PasswordResetToken {
   createdAt DateTime @default(now())
 }
 
+model MenuImage {
+  image_id Int @id @default(autoincrement())
+  url      String @db.VarChar(255)
+  type     String @db.VarChar(50)
+  ordre    Int
+
+  menu_id Int
+  menu    Menu @relation(fields: [menu_id], references: [menu_id], onDelete: Cascade)
+}
+
 model Avis {
   avis_id     Int @id @default(autoincrement())
   note        Int
   description String @db.VarChar(255)
   statut      String @db.VarChar(50)
+  createdAt   DateTime @default(now())
 
   utilisateur_id Int
   utilisateur    Utilisateur @relation(fields: [utilisateur_id], references: [utilisateur_id])
@@ -100,6 +111,7 @@ model Menu {
   theme_id Int
   theme    Theme @relation(fields: [theme_id], references: [theme_id])
 
+  images MenuImage[]
   plats     MenuPlat[]
   commandes Commande[]
 }
@@ -121,6 +133,7 @@ model Regime {
 model Plat {
   plat_id    Int @id @default(autoincrement())
   titre_plat String @db.VarChar(50)
+  type       String @db.VarChar(50) // entree, plat, dessert
   photo      Bytes?
 
   menus      MenuPlat[]

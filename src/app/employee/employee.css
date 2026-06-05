@@ -1,0 +1,584 @@
+.EmployeePage {
+  width: 100%;
+  min-height: 80vh;
+  padding: 3rem 2rem;
+  background-color: white;
+  color: black;
+}
+
+.EmployeeHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.EmployeeHeader h1 {
+  color: #ff9d00;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.EmployeeHeader p {
+  color: #555;
+}
+
+.EmployeeBoard {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #000;
+  color: white;
+  border-radius: 16px;
+  padding: 2rem;
+  gap: 10px;
+}
+
+.EmployeeFilters {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.EmployeeFilters input,
+.EmployeeFilters select {
+  height: 50px;
+  border-radius: 8px;
+  border: 1px solid #ff9d00;
+  padding: 0 1rem;
+  background-color: #111;
+  color: white;
+  outline: none;
+}
+
+.EmployeeFilters input::placeholder {
+  color: #d6d6d6;
+}
+
+.EmployeeFilters select option {
+  background-color: #111;
+  color: white;
+}
+
+.EmployeeSectionTitle {
+  color: #ff9d00;
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.EmployeeList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.EmployeeManageCard {
+  background-color: white;
+  color: black;
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.EmployeeManageCard h3 {
+  color: #ff9d00;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.MenuPresentationImages,
+.MenuDetailImages {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.MenuPresentationImages {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.MenuDetailImages {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.MenuImagePlaceholder {
+  height: 80px;
+  border-radius: 8px;
+  border: 2px dashed #ff9d00;
+  background-color: #fff7eb;
+  color: #ff9d00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.EmployeeModal input,
+.EmployeeModal textarea,
+.EmployeeModal select {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  color: black;
+}
+
+.EmployeeOrders {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.EmployeeOrderCard {
+  background-color: white;
+  color: black;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.EmployeeOrderTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.EmployeeOrderTop h2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.EmployeeStatus {
+  padding: 6px 12px;
+  border-radius: 20px;
+  background-color: #eee;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.EmployeeStatus.en-attente {
+  background-color: #fff4d6;
+  color: #a16200;
+}
+
+.EmployeeStatus.accepté {
+  background-color: #e7f8ed;
+  color: #137333;
+}
+
+.EmployeeStatus.en-préparation {
+  background-color: #e8f0fe;
+  color: #174ea6;
+}
+
+.EmployeeStatus.terminée {
+  background-color: #e7f8ed;
+  color: #137333;
+}
+
+.EmployeeOrderDetails {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.EmployeeActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.EmployeeActions button,
+.EmployeeModal button {
+  height: 45px;
+  padding: 0 18px;
+  border: 1px solid #ff9d00;
+  border-radius: 8px;
+  background-color: white;
+  color: #ff9d00;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.EmployeeActions button:hover,
+.EmployeeModal button:hover {
+  background-color: #ff9d00;
+  color: white;
+}
+
+.EmployeeCancelButton {
+  border-color: #c5221f !important;
+  color: #c5221f !important;
+}
+
+.EmployeeCancelButton:hover {
+  background-color: #c5221f !important;
+  color: white !important;
+}
+
+.NoEmployeeOrder {
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.EmployeeModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.55);
+
+  z-index: 100;
+}
+
+.EmployeeModal {
+  position: relative;
+
+  width: 520px;
+  max-width: 92vw;
+  max-height: 85vh;
+
+  overflow-y: auto;
+
+  background: white;
+  border-radius: 14px;
+  padding: 2rem;
+
+  z-index: 101;
+}
+
+.EmployeeModal {
+  position: relative;
+  width: 500px;
+  max-width: 90%;
+  background-color: white;
+  color: black;
+  border-radius: 14px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.EmployeeModal h2 {
+  color: #ff9d00;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.EmployeeModalClose {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  border: none !important;
+  background: none !important;
+  color: black !important;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.EmployeeModal select,
+.EmployeeModal textarea {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.EmployeeModal textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.EmployeeTabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.EmployeeTabs button {
+  height: 45px;
+  padding: 0 20px;
+  border: 1px solid #ff9d00;
+  border-radius: 8px;
+  background-color: white;
+  color: #ff9d00;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.EmployeeTabs button:hover,
+.EmployeeTabs .ActiveTab {
+  background-color: #ff9d00;
+  color: white;
+}
+
+.EmployeeManageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.EmployeeManageHeader span {
+  background-color: #fff4d6;
+  color: #a16200;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.UploadGrid,
+.MenuPresentationImages,
+.MenuDetailImages {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+
+.PresentationUploadGrid,
+.MenuPresentationImages {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.DetailUploadGrid,
+.MenuDetailImages {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.UploadBox,
+.MenuImagePlaceholder {
+  height: 90px;
+  border-radius: 10px;
+  border: 2px dashed #ff9d00;
+  background-color: #fff7eb;
+  color: #ff9d00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.UploadBox img,
+.MenuImagePlaceholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.CreateMenuButton {
+  height: 48px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ff9d00;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.FormGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.FormGroup label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.FormGroup input,
+.FormGroup textarea {
+  width: 100%;
+}
+
+.FormGroup textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.SectionLabel {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #ff9d00;
+}
+
+.EmployeeModal {
+  width: 520px;
+  max-width: 92vw;
+  max-height: 85vh;
+
+  overflow-y: auto;
+
+  background-color: white;
+  color: black;
+  border-radius: 14px;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.EmployeeModal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.EmployeeModal::-webkit-scrollbar-thumb {
+  background-color: #ff9d00;
+  border-radius: 10px;
+}
+
+.EmployeeModal::-webkit-scrollbar-track {
+  background-color: #eee;
+}
+
+.TagCheckboxGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.7rem;
+}
+
+.TagCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fff7eb;
+  border: 1px solid #ff9d00;
+  color: black;
+  border-radius: 8px;
+  padding: 0.7rem;
+  cursor: pointer;
+}
+
+.TagCheckbox input {
+  width: auto;
+}
+
+.MenuFilters {
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  margin-bottom: 32px;
+}
+
+.EmployeeSubModalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+.EmployeeSubModal {
+  position: relative;
+  z-index: 201;
+
+  width: 430px;
+  max-width: 92vw;
+
+  background: #ffffff;
+  color: #111;
+  border-radius: 18px;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  border-top: 5px solid #ff9d00;
+}
+
+.EmployeeSubModal h2 {
+  color: #ff9d00;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.EmployeeSubModal .FormGroup {
+  margin-bottom: 0.5rem;
+}
+
+.EmployeeSubModal input {
+  height: 48px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 0 14px;
+  outline: none;
+  color: #111;
+}
+
+.EmployeeSubModal input:focus {
+  border-color: #ff9d00;
+  box-shadow: 0 0 0 3px rgba(255, 157, 0, 0.15);
+}
+
+.EmployeeSubModal button:not(.EmployeeModalClose) {
+  height: 46px;
+  border-radius: 10px;
+  border: 1px solid #ff9d00;
+  background: #ff9d00;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.EmployeeSubModal button:not(.EmployeeModalClose):hover {
+  background: #e58d00;
+}
+
+.EmployeeSubModal .EmployeeModalClose {
+  top: 14px;
+  right: 16px;
+}
+
+@media (max-width: 900px) {
+  .MenuFilters {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .EmployeeFilters,
+  .EmployeeOrderDetails {
+    grid-template-columns: 1fr;
+  }
+
+  .EmployeeActions {
+    flex-direction: column;
+  }
+
+  .EmployeeList {
+    grid-template-columns: 1fr;
+  }
+
+  .MenuPresentationImages,
+  .MenuDetailImages {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
