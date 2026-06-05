@@ -633,7 +633,23 @@ export default function EmployeePage() {
       );
     });
 
-  
+  const handleDeleteHoraire = async (id: number) => {
+    const response = await fetch(`/api/employee/horaires/${id}`, {
+      method: "DELETE",
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      toast.error(data.message);
+      return;
+    }
+
+    setHoraires((current) => current.filter((horaire) => horaire.id !== id));
+
+    toast.success(data.message);
+  };
+
   return (
     <main className="EmployeePage">
       <section className="EmployeeHeader">
@@ -975,6 +991,14 @@ export default function EmployeePage() {
                     onClick={() => openHoraireModal(horaire)}
                   >
                     Modifier
+                  </button>
+
+                  <button
+                    type="button"
+                    className="EmployeeCancelButton"
+                    onClick={() => handleDeleteHoraire(horaire.id)}
+                  >
+                    Supprimer
                   </button>
                 </div>
               </article>

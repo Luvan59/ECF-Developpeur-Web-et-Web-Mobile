@@ -45,3 +45,30 @@ export async function PUT(
     );
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  try {
+    const { id } = await params;
+    const horaireId = Number(id);
+
+    await prisma.horaire.delete({
+      where: {
+        horaire_id: horaireId,
+      },
+    });
+
+    return NextResponse.json({
+      message: "Horaire supprimé avec succès.",
+    });
+  } catch (error) {
+    console.error("DELETE HORAIRE ERROR:", error);
+
+    return NextResponse.json(
+      { message: "Erreur lors de la suppression de l'horaire." },
+      { status: 500 },
+    );
+  }
+}
