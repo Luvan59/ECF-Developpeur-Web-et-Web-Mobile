@@ -84,11 +84,10 @@ export async function POST(request: Request) {
     const uploadDir = path.join(process.cwd(), "public/uploads/menus");
     await mkdir(uploadDir, { recursive: true });
 
-    const saveImages = async (key: string, type: string) => {
-      const files = formData.getAll(key) as File[];
+    const saveImages = async (prefix: string, type: string, max: number) => {
+      for (let index = 0; index < max; index++) {
+        const file = formData.get(`${prefix}_${index}`) as File | null;
 
-      for (let index = 0; index < files.length; index++) {
-        const file = files[index];
         if (!file || file.size === 0) continue;
 
         const bytes = await file.arrayBuffer();
@@ -110,8 +109,8 @@ export async function POST(request: Request) {
       }
     };
 
-    await saveImages("presentationImages", "presentation");
-    await saveImages("detailImages", "detail");
+    await saveImages("presentationImage", "presentation", 4);
+    await saveImages("detailImage", "detail", 6);
 
     return NextResponse.json({
       message: "Menu créé avec succès.",

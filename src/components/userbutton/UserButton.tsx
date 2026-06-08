@@ -84,12 +84,14 @@ export default function UserButton() {
 
           {user.role === "EMPLOYEE" && (
             <>
+              <Link href="/account">Mon espace</Link>
               <Link href="/employee">Espace employé</Link>
             </>
           )}
 
           {user.role === "ADMIN" && (
             <>
+              <Link href="/account">Mon espace</Link>
               <Link href="/admin">Dashboard admin</Link>
               <Link href="/admin/employees">Gestion employés</Link>
               <Link href="/admin/stats">Statistiques</Link>

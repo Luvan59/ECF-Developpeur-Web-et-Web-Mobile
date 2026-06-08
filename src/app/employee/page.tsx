@@ -237,19 +237,36 @@ export default function EmployeePage() {
     setModalType("menu");
   };
 
-  const handleStatusUpdate = () => {
+  const handleStatusUpdate = async () => {
     if (!selectedOrder || !newStatus) {
       toast.error("Veuillez choisir un statut.");
       return;
     }
 
+    const response = await fetch(`/api/employee/orders/${selectedOrder.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        statut: newStatus,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      toast.error(data.message);
+      return;
+    }
+
     setOrders((currentOrders) =>
       currentOrders.map((order) =>
-        order.id === selectedOrder.id ? { ...order, statut: newStatus } : order,
+        order.id === selectedOrder.id ? data.order : order,
       ),
     );
 
-    toast.success("Statut de commande mis à jour.");
+    toast.success(data.message);
     setSelectedOrder(null);
     setModalType(null);
     setNewStatus("");
@@ -314,52 +331,89 @@ export default function EmployeePage() {
     formDataToSend.append("minimum", menuForm.minimum);
     formDataToSend.append("stock", menuForm.stock);
     formDataToSend.append("description", menuForm.description);
+    formDataToSend.append("entreeId", menuForm.entreeId);
+    formDataToSend.append("platId", menuForm.platId);
+    formDataToSend.append("dessertId", menuForm.dessertId);
 
-    menuForm.presentationImages.forEach((image) => {
+    menuForm.presentationImages.forEach((image, index) => {
       if (image.file) {
-        formDataToSend.append("presentationImages", image.file);
+        formDataToSend.append(`presentationImage_${index}`, image.file);
       }
     });
 
-    menuForm.detailImages.forEach((image) => {
+    menuForm.detailImages.forEach((image, index) => {
       if (image.file) {
-        formDataToSend.append("detailImages", image.file);
+        formDataToSend.append(`detailImage_${index}`, image.file);
       }
     });
 
-    const response = await fetch("/api/employee/menus", {
-      method: "POST",
-      body: formDataToSend,
-    });
+    const isEditing = Boolean(selectedMenu);
 
-    const data = await response.json();
+    const response = await fetch(
+      isEditing
+        ? `/api/employee/menus/${selectedMenu.id}`
+        : "/api/employee/menus",
+      {
+        method: isEditing ? "PUT" : "POST",
+        body: formDataToSend,
+      },
+    );
+
+    type MenuSaveResponse = {
+      message: string;
+      menuId?: number;
+    };
+
+    let data: MenuSaveResponse = {
+      message: "Erreur lors de l'enregistrement du menu.",
+    };
+
+    try {
+      data = await response.json();
+    } catch {
+      data = {
+        message:
+          "La route API n'a pas retourné de JSON. Vérifie le PUT/POST de /api/employee/menus.",
+      };
+    }
 
     if (!response.ok) {
       toast.error(data.message);
       return;
     }
 
+    if (!isEditing && !data.menuId) {
+      toast.error("Le menu a été créé mais l'API n'a pas renvoyé son id.");
+      return;
+    }
+
     toast.success(data.message);
 
-    setMenus((currentMenus) => [
-      ...currentMenus,
-      {
-        id: data.menuId,
-        titre: menuForm.titre,
-        theme: menuForm.theme,
-        regime: menuForm.regime,
-        prix: Number(menuForm.prix),
-        minimum: Number(menuForm.minimum),
-        stock: Number(menuForm.stock),
-        description: menuForm.description,
-        presentationImages: menuForm.presentationImages,
-        detailImages: menuForm.detailImages,
-        entree: "",
-        plat: "",
-        dessert: "",
-        allergenes: [] as number[],
-      },
-    ]);
+    const updatedMenu = {
+      id: isEditing ? selectedMenu.id : data.menuId!,
+      titre: menuForm.titre,
+      theme: menuForm.theme,
+      regime: menuForm.regime,
+      prix: Number(menuForm.prix),
+      minimum: Number(menuForm.minimum),
+      stock: Number(menuForm.stock),
+      description: menuForm.description,
+      presentationImages: menuForm.presentationImages,
+      detailImages: menuForm.detailImages,
+      entreeId: menuForm.entreeId,
+      platId: menuForm.platId,
+      dessertId: menuForm.dessertId,
+    };
+
+    if (isEditing) {
+      setMenus((currentMenus) =>
+        currentMenus.map((menu) =>
+          menu.id === selectedMenu.id ? updatedMenu : menu,
+        ),
+      );
+    } else {
+      setMenus((currentMenus) => [...currentMenus, updatedMenu]);
+    }
 
     setSelectedMenu(null);
     setModalType(null);
@@ -891,21 +945,22 @@ export default function EmployeePage() {
                   <strong>Photos de présentation :</strong>
 
                   <div className="MenuPresentationImages">
-                    {[0, 1, 2, 3].map((index) => (
-                      <div key={index} className="MenuImagePlaceholder">
-                        {menu.presentationImages?.[index]?.preview ? (
-                          <img
-                            src={
-                              menu.presentationImages?.[index]?.preview ||
-                              menu.presentationImages?.[index]?.url
-                            }
-                            alt={`Photo présentation ${index + 1}`}
-                          />
-                        ) : (
-                          `Photo ${index + 1}`
-                        )}
-                      </div>
-                    ))}
+                    {[0, 1, 2, 3].map((index) => {
+                      const image = menu.presentationImages?.[index];
+
+                      return (
+                        <div key={index} className="MenuImagePlaceholder">
+                          {image?.preview || image?.url ? (
+                            <img
+                              src={image.preview || image.url}
+                              alt={`Photo présentation ${index + 1}`}
+                            />
+                          ) : (
+                            `Photo ${index + 1}`
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -913,18 +968,22 @@ export default function EmployeePage() {
                   <strong>Photos de détail :</strong>
 
                   <div className="MenuDetailImages">
-                    {[0, 1, 2, 3, 4, 5].map((index) => (
-                      <div key={index} className="MenuImagePlaceholder">
-                        {menu.detailImages?.[index]?.preview ? (
-                          <img
-                            src={menu.detailImages[index].preview}
-                            alt={`Photo détail ${index + 1}`}
-                          />
-                        ) : (
-                          `Détail ${index + 1}`
-                        )}
-                      </div>
-                    ))}
+                    {[0, 1, 2, 3, 4, 5].map((index) => {
+                      const image = menu.detailImages?.[index];
+
+                      return (
+                        <div key={index} className="MenuImagePlaceholder">
+                          {image?.preview || image?.url ? (
+                            <img
+                              src={image.preview || image.url}
+                              alt={`Photo détail ${index + 1}`}
+                            />
+                          ) : (
+                            `Détail ${index + 1}`
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -1371,7 +1430,10 @@ export default function EmployeePage() {
                     <label key={index} className="UploadBox">
                       {menuForm.presentationImages[index] ? (
                         <img
-                          src={menuForm.presentationImages[index].preview}
+                          src={
+                            menuForm.presentationImages[index].preview ||
+                            menuForm.presentationImages[index].url
+                          }
                           alt={`Présentation ${index + 1}`}
                         />
                       ) : (
@@ -1397,7 +1459,10 @@ export default function EmployeePage() {
                     <label key={index} className="UploadBox">
                       {menuForm.detailImages[index] ? (
                         <img
-                          src={menuForm.detailImages[index].preview}
+                          src={
+                            menuForm.detailImages[index].preview ||
+                            menuForm.detailImages[index].url
+                          }
                           alt={`Détail ${index + 1}`}
                         />
                       ) : (
