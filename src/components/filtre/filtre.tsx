@@ -1,6 +1,16 @@
 "use client";
+
 import { useEffect, useMemo, useState } from "react";
 import styles from "./filtre.module.css";
+
+type FilterSelectProps = {
+  onFilterChange: (filters: {
+    maxPrice: number;
+    theme: string;
+    regime: string;
+    people: string;
+  }) => void;
+};
 
 const themes = ["Tous", "Classique", "Événement", "Pâques"];
 const regimes = ["Tous", "Classique", "Vegan", "Végétarien"];

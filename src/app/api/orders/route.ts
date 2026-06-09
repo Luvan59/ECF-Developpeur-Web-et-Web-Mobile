@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getMongoDb } from "@/lib/mongodb";
 
 export async function POST(request: Request) {
   try {
@@ -92,6 +93,27 @@ export async function POST(request: Request) {
           },
         },
       },
+    });
+
+    const mongoDb = await getMongoDb();
+
+    await mongoDb.collection("order_stats").insertOne({
+      commandeId: commande.commande_id,
+      numeroCommande: commande.numero_commande,
+
+      menuId: menu.menu_id,
+      menuTitre: menu.titre,
+
+      utilisateurId: utilisateur.utilisateur_id,
+
+      nombrePersonne: Number(nombrePersonne),
+      prixMenu,
+      prixLivraison: livraisonPrice,
+      total: prixMenu + livraisonPrice,
+
+      statut: "en attente",
+      dateCommande: new Date(),
+      datePrestation: new Date(datePrestation),
     });
 
     await prisma.menu.update({

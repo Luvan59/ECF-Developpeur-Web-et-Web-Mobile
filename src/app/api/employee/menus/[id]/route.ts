@@ -20,6 +20,10 @@ export async function PUT(
     const minimum = Number(formData.get("minimum"));
     const stock = Number(formData.get("stock"));
     const description = String(formData.get("description"));
+    const conditions = String(formData.get("conditions"));
+    const entreeId = Number(formData.get("entreeId"));
+    const platId = Number(formData.get("platId"));
+    const dessertId = Number(formData.get("dessertId"));
 
     const themeRecord =
       (await prisma.theme.findFirst({ where: { libelle: theme } })) ||
@@ -39,11 +43,32 @@ export async function PUT(
         prix_par_personne: prix,
         regime,
         description,
+        conditions,
         quantite_restante: stock,
         theme_id: themeRecord.theme_id,
         regime_id: regimeRecord.regime_id,
       },
     });
+
+    await prisma.menuPlat.deleteMany({
+      where: {
+        menu_id: menuId,
+      },
+    });
+
+    const platIds = [entreeId, platId, dessertId].filter(
+      (id) => Number.isInteger(id) && id > 0,
+    );
+
+    if (platIds.length > 0) {
+      await prisma.menuPlat.createMany({
+        data: platIds.map((platId) => ({
+          menu_id: menuId,
+          plat_id: platId,
+        })),
+        skipDuplicates: true,
+      });
+    }
 
     const uploadDir = path.join(process.cwd(), "public/uploads/menus");
     await mkdir(uploadDir, { recursive: true });

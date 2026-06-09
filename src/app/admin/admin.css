@@ -1,0 +1,361 @@
+.AdminPage {
+  min-height: 80vh;
+  padding: 3rem 2rem;
+  background: #f7f7f7;
+  color: #111;
+}
+
+.AdminHero {
+  max-width: 1180px;
+  margin: 0 auto 2rem;
+  padding: 2rem;
+  border-radius: 24px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 157, 0, 0.18),
+      transparent 35%
+    ),
+    #050505;
+  color: white;
+}
+
+.AdminBadge {
+  display: inline-flex;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 157, 0, 0.15);
+  color: #ff9d00;
+  border: 1px solid rgba(255, 157, 0, 0.35);
+  font-weight: 800;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.AdminHero h1 {
+  color: #ff9d00;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+}
+
+.AdminHero p {
+  max-width: 700px;
+  color: #d6d6d6;
+}
+
+.AdminKpiGrid {
+  max-width: 1180px;
+  margin: 0 auto 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.AdminKpiCard {
+  background: white;
+  border-radius: 18px;
+  padding: 1.4rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border: 1px solid #eee;
+}
+
+.AdminKpiCard span {
+  display: block;
+  color: #666;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.AdminKpiCard strong {
+  color: #ff9d00;
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.AdminPanel {
+  max-width: 1180px;
+  margin: 0 auto 1.5rem;
+  background: white;
+  border-radius: 24px;
+  padding: 1.6rem;
+  border: 1px solid #eee;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.06);
+}
+
+.AdminPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.3rem;
+}
+
+.AdminPanelHeader h2 {
+  color: #111;
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.AdminPanelHeader p {
+  color: #777;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.AdminFilters,
+.AdminFormGrid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr auto;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1.4rem;
+}
+
+.AdminFormGrid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.AdminField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.AdminFieldFull {
+  grid-column: 1 / -1;
+}
+
+.AdminField label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #444;
+}
+
+.AdminField input,
+.AdminField select {
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  padding: 0 0.9rem;
+  background: #fafafa;
+  outline: none;
+  color: #111;
+}
+
+.AdminField input:focus,
+.AdminField select:focus {
+  border-color: #ff9d00;
+  box-shadow: 0 0 0 4px rgba(255, 157, 0, 0.13);
+  background: white;
+}
+
+.AdminPrimaryButton,
+.AdminSecondaryButton,
+.AdminDangerButton {
+  height: 46px;
+  border-radius: 12px;
+  padding: 0 1rem;
+  font-weight: 900;
+  cursor: pointer;
+  border: none;
+}
+
+.AdminPrimaryButton {
+  background: #ff9d00;
+  color: white;
+  box-shadow: 0 10px 22px rgba(255, 157, 0, 0.25);
+}
+
+.AdminPrimaryButton:hover {
+  background: #e58d00;
+}
+
+.AdminSecondaryButton {
+  background: #111;
+  color: white;
+}
+
+.AdminDangerButton {
+  background: #fff1f1;
+  color: #c5221f;
+  border: 1px solid #f3b4b4;
+}
+
+.AdminFullButton {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.AdminStatsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.AdminStatCard {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.2rem;
+  align-items: center;
+  padding: 1.2rem;
+  border-radius: 18px;
+  background: #fafafa;
+  border: 1px solid #eee;
+}
+
+.AdminStatContent h3 {
+  color: #ff9d00;
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.AdminStatContent p {
+  color: #666;
+  margin: 0.25rem 0;
+}
+
+.AdminStatContent strong {
+  font-size: 1.2rem;
+  color: #111;
+}
+
+.AdminBarArea {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.AdminBarInfo {
+  display: flex;
+  justify-content: space-between;
+  color: #555;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.AdminBarWrapper {
+  width: 100%;
+  height: 18px;
+  border-radius: 999px;
+  background: #fff4d6;
+  overflow: hidden;
+}
+
+.AdminBar {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff9d00, #ffc56b);
+}
+
+.AdminEmpty {
+  padding: 1rem;
+  border-radius: 14px;
+  background: #fff7eb;
+  color: #a16200;
+  font-weight: 800;
+  text-align: center;
+}
+
+.AdminTwoColumns {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 1.5rem;
+}
+
+.AdminTwoColumns .AdminPanel {
+  margin: 0;
+}
+
+.AdminEmployeeList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.AdminEmployeeCard {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 16px;
+  background: #fafafa;
+  border: 1px solid #eee;
+}
+
+.AdminEmployeeCard h3 {
+  font-weight: 900;
+  color: #111;
+}
+
+.AdminEmployeeCard p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.AdminEmployeeActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.AdminStatus {
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.AdminStatus.Active {
+  background: #e7f8ed;
+  color: #137333;
+}
+
+.AdminStatus.Disabled {
+  background: #f1f1f1;
+  color: #777;
+}
+
+@media (max-width: 1000px) {
+  .AdminKpiGrid,
+  .AdminTwoColumns {
+    grid-template-columns: 1fr;
+  }
+
+  .AdminFilters {
+    grid-template-columns: 1fr;
+  }
+
+  .AdminStatCard {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .AdminPage {
+    padding: 2rem 1rem;
+  }
+
+  .AdminHero,
+  .AdminPanel {
+    border-radius: 18px;
+    padding: 1.2rem;
+  }
+
+  .AdminFormGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .AdminEmployeeCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .AdminEmployeeActions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

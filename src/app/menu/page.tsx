@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import TagItemRed from "@/components/tag_item_red/tag_item_red";
 import TagItemGreen from "@/components/tag_item_green/tag_item_green";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type MenuType = {
   id: number;
@@ -44,6 +45,8 @@ export default function Menu() {
   const [addressValid, setAddressValid] = useState(false);
   const [addressLoading, setAddressLoading] = useState(false);
   const [addressError, setAddressError] = useState("");
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [menus, setMenus] = useState<MenuType[]>([]);
   const [loadingMenus, setLoadingMenus] = useState(true);
@@ -90,6 +93,12 @@ export default function Menu() {
   });
 
   const handleOpenOrderDrawer = (menu: MenuType) => {
+    if (!isAuthenticated) {
+      toast.error("Veuillez vous connecter pour commander.");
+      router.push("/login");
+      return;
+    }
+
     setOrderMenu(menu);
     setQuantity(menu.minPeople);
     setDeliveryMode("livraison");
@@ -122,9 +131,15 @@ export default function Menu() {
   useEffect(() => {
     const loadUser = async () => {
       const response = await fetch("/api/auth/me");
-      if (!response.ok) return;
+
+      if (!response.ok) {
+        setIsAuthenticated(false);
+        return;
+      }
 
       const data = await response.json();
+
+      setIsAuthenticated(true);
 
       setUserInfo({
         prenom: data.prenom || "",
@@ -491,9 +506,14 @@ export default function Menu() {
                 </div>
               )}
 
-              <div>
+              <div className="OrderMenuInfo">
                 <h3>{orderMenu.title}</h3>
-                <p>{orderMenu.price} € / personne</p>
+
+                <p>
+                  <strong>{formatPrice(orderMenu.price)} €</strong> / personne
+                </p>
+
+                <span>Minimum : {orderMenu.minPeople} personnes</span>
               </div>
 
               <div className="QuantityControl">

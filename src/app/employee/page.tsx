@@ -72,6 +72,7 @@ export default function EmployeePage() {
     minimum: "",
     stock: "",
     description: "",
+    conditions: "",
     entreeId: "",
     platId: "",
     dessertId: "",
@@ -206,7 +207,7 @@ export default function EmployeePage() {
         minimum: String(menu.minimum),
         stock: String(menu.stock),
         description: menu.description,
-
+        conditions: menu.conditions || "",
         entreeId: menu.entreeId ? String(menu.entreeId) : "",
         platId: menu.platId ? String(menu.platId) : "",
         dessertId: menu.dessertId ? String(menu.dessertId) : "",
@@ -224,7 +225,7 @@ export default function EmployeePage() {
         minimum: "",
         stock: "",
         description: "",
-
+        conditions: "",
         entreeId: "",
         platId: "",
         dessertId: "",
@@ -316,7 +317,8 @@ export default function EmployeePage() {
       !menuForm.prix ||
       !menuForm.minimum ||
       !menuForm.stock ||
-      !menuForm.description
+      !menuForm.description ||
+      !menuForm.conditions
     ) {
       toast.error("Tous les champs du menu sont obligatoires.");
       return;
@@ -331,6 +333,7 @@ export default function EmployeePage() {
     formDataToSend.append("minimum", menuForm.minimum);
     formDataToSend.append("stock", menuForm.stock);
     formDataToSend.append("description", menuForm.description);
+    formDataToSend.append("conditions", menuForm.conditions);
     formDataToSend.append("entreeId", menuForm.entreeId);
     formDataToSend.append("platId", menuForm.platId);
     formDataToSend.append("dessertId", menuForm.dessertId);
@@ -398,6 +401,7 @@ export default function EmployeePage() {
       minimum: Number(menuForm.minimum),
       stock: Number(menuForm.stock),
       description: menuForm.description,
+      conditions: menuForm.conditions,
       presentationImages: menuForm.presentationImages,
       detailImages: menuForm.detailImages,
       entreeId: menuForm.entreeId,
@@ -1421,6 +1425,20 @@ export default function EmployeePage() {
                         description: e.target.value,
                       })
                     }
+                  />
+                </div>
+
+                <div className="FormGroup">
+                  <label>Conditions du menu</label>
+                  <textarea
+                    value={menuForm.conditions}
+                    onChange={(e) =>
+                      setMenuForm({
+                        ...menuForm,
+                        conditions: e.target.value,
+                      })
+                    }
+                    placeholder="Ex : Nécessite de commander 10 jours avant, précautions de stockage..."
                   />
                 </div>
                 <label>Photos de présentation</label>

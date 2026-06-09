@@ -24,6 +24,8 @@ model Utilisateur {
   ville          String @db.VarChar(50)
   pays           String @db.VarChar(50)
   adresse_postale String @db.VarChar(50)
+
+  actif Boolean @default(true)
   
   role_id Int
   role    Role @relation(fields: [role_id], references: [role_id])
@@ -103,6 +105,7 @@ model Menu {
   prix_par_personne       Float
   regime                  String @db.VarChar(50)
   description             String @db.VarChar(255)
+  conditions              String? @db.VarChar(255)
   quantite_restante       Int
 
   regime_id Int

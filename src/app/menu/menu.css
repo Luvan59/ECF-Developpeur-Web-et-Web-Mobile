@@ -529,6 +529,41 @@
   text-align: center;
 }
 
+.OrderMenuInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.OrderMenuInfo h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.OrderMenuInfo p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.OrderMenuInfo p strong {
+  color: #ff9d00;
+  font-size: 1rem;
+}
+
+.OrderMenuInfo span {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 0.2rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: #fff7eb;
+  color: #a16200;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
 @media (max-width: 900px) {
   .OrderDrawer {
     width: 100%;

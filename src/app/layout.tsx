@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { Toaster } from "react-hot-toast";
-import UserButton from "@/components/userbutton/UserButton";
 import { prisma } from "@/lib/prisma";
+import Header from "@/components/header/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,23 +37,8 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-screen flex flex-col font-family-Inter">
-        <header>
-          <div className="HeaderMain">
-            <h1>Vite & Gourmand</h1>
-            <div className="HeaderButtons">
-              <Link href="/">
-                <h1 className="HeaderButton">Acceuil </h1>
-              </Link>
-              <Link href="/menu">
-                <h1 className="HeaderButton">Menu </h1>
-              </Link>
-              <Link href="/contact">
-                <h1 className="HeaderButton">Contact</h1>
-              </Link>
-              <UserButton />
-            </div>
-          </div>
-        </header>
+        <Header />
+
         <main className="flex-1">
           {children}
           <Toaster

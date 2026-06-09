@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendOrderFinishedEmail } from "@/lib/mail";
+import { getMongoDb } from "@/lib/mongodb";
 
 export async function DELETE(
   request: Request,
@@ -97,6 +98,45 @@ export async function PUT(
         menu: true,
       },
     });
+
+    const mongoDb = await getMongoDb();
+
+    if (statut === "terminée") {
+      await mongoDb.collection("order_stats").updateOne(
+        {
+          commandeId: commande.commande_id,
+        },
+        {
+          $set: {
+            commandeId: commande.commande_id,
+            numeroCommande: commande.numero_commande,
+
+            menuId: commande.menu.menu_id,
+            menuTitre: commande.menu.titre,
+
+            utilisateurId: commande.utilisateur.utilisateur_id,
+            client: `${commande.utilisateur.prenom} ${commande.utilisateur.nom}`,
+
+            nombrePersonne: commande.nombre_personne,
+            prixMenu: commande.prix_menu,
+            prixLivraison: commande.prix_livraison,
+            total: commande.prix_menu + commande.prix_livraison,
+
+            statut: commande.statut,
+            dateCommande: commande.date_commande,
+            datePrestation: commande.date_prestation,
+            dateTerminee: new Date(),
+          },
+        },
+        {
+          upsert: true,
+        },
+      );
+    } else {
+      await mongoDb.collection("order_stats").deleteOne({
+        commandeId: commande.commande_id,
+      });
+    }
 
     if (statut === "terminée" && oldCommande.statut !== "terminée") {
       try {

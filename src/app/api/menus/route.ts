@@ -61,7 +61,7 @@ export async function GET() {
           minPeople: menu.nombre_personne_minimum,
           theme: menu.theme.libelle,
           regime: menu.regimeRelation.libelle,
-          conditions: "Conditions à définir",
+          conditions: menu.conditions || "",
           stock: menu.quantite_restante,
 
           presentationImages: menu.images

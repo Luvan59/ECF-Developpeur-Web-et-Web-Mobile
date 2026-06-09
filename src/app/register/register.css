@@ -162,3 +162,23 @@
   background-color: #f3fff3;
   transition: 0.2s;
 }
+
+@media (max-width: 760px) {
+  .FormContainer {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 15px;
+    gap: 20px;
+    overflow: hidden;
+  }
+
+  .Formulaire {
+    width: 100%;
+    max-width: 520px;
+    min-width: 0;
+    flex: none;
+  }
+}

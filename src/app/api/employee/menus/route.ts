@@ -14,6 +14,11 @@ export async function GET() {
             ordre: "asc",
           },
         },
+        plats: {
+          include: {
+            plat: true,
+          },
+        },
       },
       orderBy: {
         menu_id: "desc",
@@ -21,22 +26,47 @@ export async function GET() {
     });
 
     return NextResponse.json(
-      menus.map((menu) => ({
-        id: menu.menu_id,
-        titre: menu.titre,
-        theme: menu.theme.libelle,
-        regime: menu.regimeRelation.libelle,
-        prix: menu.prix_par_personne,
-        minimum: menu.nombre_personne_minimum,
-        stock: menu.quantite_restante,
-        description: menu.description,
-        presentationImages: menu.images
-          .filter((image) => image.type === "presentation")
-          .map((image) => ({ url: image.url })),
-        detailImages: menu.images
-          .filter((image) => image.type === "detail")
-          .map((image) => ({ url: image.url })),
-      })),
+      menus.map((menu) => {
+        const entree = menu.plats.find(
+          (menuPlat) => menuPlat.plat.type === "entree",
+        )?.plat;
+
+        const platPrincipal = menu.plats.find(
+          (menuPlat) => menuPlat.plat.type === "plat",
+        )?.plat;
+
+        const dessert = menu.plats.find(
+          (menuPlat) => menuPlat.plat.type === "dessert",
+        )?.plat;
+
+        return {
+          id: menu.menu_id,
+          titre: menu.titre,
+          theme: menu.theme.libelle,
+          regime: menu.regimeRelation.libelle,
+          prix: menu.prix_par_personne,
+          minimum: menu.nombre_personne_minimum,
+          stock: menu.quantite_restante,
+          description: menu.description,
+          conditions: menu.conditions || "",
+
+          entreeId: entree?.plat_id || "",
+          platId: platPrincipal?.plat_id || "",
+          dessertId: dessert?.plat_id || "",
+
+          entree: entree?.titre_plat || "",
+          plat: platPrincipal?.titre_plat || "",
+          dessert: dessert?.titre_plat || "",
+
+          presentationImages: menu.images
+            .filter((image) => image.type === "presentation")
+            .map((image) => ({ url: image.url })),
+
+          detailImages: menu.images
+            .filter((image) => image.type === "detail")
+            .map((image) => ({ url: image.url })),
+        };
+      }),
     );
   } catch (error) {
     console.error("GET MENUS ERROR:", error);
@@ -59,6 +89,10 @@ export async function POST(request: Request) {
     const minimum = Number(formData.get("minimum"));
     const stock = Number(formData.get("stock"));
     const description = String(formData.get("description"));
+    const conditions = String(formData.get("conditions") || "");
+    const entreeId = Number(formData.get("entreeId"));
+    const platId = Number(formData.get("platId"));
+    const dessertId = Number(formData.get("dessertId"));
 
     const themeRecord =
       (await prisma.theme.findFirst({ where: { libelle: theme } })) ||
@@ -75,11 +109,26 @@ export async function POST(request: Request) {
         prix_par_personne: prix,
         regime,
         description,
+        conditions,
         quantite_restante: stock,
         theme_id: themeRecord.theme_id,
         regime_id: regimeRecord.regime_id,
       },
     });
+
+    const platIds = [entreeId, platId, dessertId].filter(
+      (id) => Number.isInteger(id) && id > 0,
+    );
+
+    if (platIds.length > 0) {
+      await prisma.menuPlat.createMany({
+        data: platIds.map((platId) => ({
+          menu_id: menu.menu_id,
+          plat_id: platId,
+        })),
+        skipDuplicates: true,
+      });
+    }
 
     const uploadDir = path.join(process.cwd(), "public/uploads/menus");
     await mkdir(uploadDir, { recursive: true });
