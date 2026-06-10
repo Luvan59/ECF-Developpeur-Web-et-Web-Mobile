@@ -1,7 +1,30 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
+import cloudinary from "@/lib/cloudinary";
+
+async function uploadMenuImage(file: File, folder: string) {
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  return new Promise<string>((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream(
+        {
+          folder,
+          resource_type: "image",
+        },
+        (error, result) => {
+          if (error || !result) {
+            reject(error || new Error("Erreur upload Cloudinary."));
+            return;
+          }
+
+          resolve(result.secure_url);
+        },
+      )
+      .end(buffer);
+  });
+}
 
 export async function PUT(
   request: Request,
@@ -70,9 +93,6 @@ export async function PUT(
       });
     }
 
-    const uploadDir = path.join(process.cwd(), "public/uploads/menus");
-    await mkdir(uploadDir, { recursive: true });
-
     const saveImages = async (prefix: string, type: string, max: number) => {
       for (let index = 0; index < max; index++) {
         const file = formData.get(`${prefix}_${index}`) as File | null;
@@ -87,17 +107,14 @@ export async function PUT(
           },
         });
 
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-
-        const fileName = `${Date.now()}-${type}-${index}-${file.name}`;
-        const filePath = path.join(uploadDir, fileName);
-
-        await writeFile(filePath, buffer);
+        const imageUrl = await uploadMenuImage(
+          file,
+          `vite-gourmand/menus/${menuId}/${type}`,
+        );
 
         await prisma.menuImage.create({
           data: {
-            url: `/uploads/menus/${fileName}`,
+            url: imageUrl,
             type,
             ordre: index,
             menu_id: menu.menu_id,
