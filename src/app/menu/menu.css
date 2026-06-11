@@ -568,4 +568,50 @@
   .OrderDrawer {
     width: 100%;
   }
+
+  .MenuMainTitle {
+    padding: 1rem;
+    font-size: 1.6rem;
+  }
+
+  .MenuBoard {
+    grid-template-columns: 1fr;
+    padding: 0.75rem;
+  }
+
+  .MenuCard {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .MenuImages {
+    grid-template-columns: 1fr;
+    padding: 0;
+    gap: 5px;
+    overflow: hidden;
+  }
+
+  .MenuImages > * {
+    width: 100%;
+  }
+
+  .MenuImages > *:nth-child(n + 3) {
+    display: none;
+  }
+
+  .MenuImages img,
+  .MenuImagePlaceholderPublic {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .MenuButtons {
+    flex-direction: column;
+  }
+
+  .MenuButtons button,
+  .MenuButtons a {
+    width: 100%;
+  }
 }

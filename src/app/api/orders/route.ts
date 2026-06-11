@@ -73,65 +73,76 @@ export async function POST(request: Request) {
     const prixMenu = menu.prix_par_personne * Number(nombrePersonne);
     const livraisonPrice = livraison ? Number(prixLivraison || 0) : 0;
 
-    const commande = await prisma.commande.create({
-      data: {
-        numero_commande: `CMD-${Date.now()}`,
-        date_commande: new Date(),
-        date_prestation: new Date(datePrestation),
-        heure_livraison: heureLivraison,
-        prix_menu: prixMenu,
-        nombre_personne: Number(nombrePersonne),
-        prix_livraison: livraisonPrice,
-        statut: "en attente",
-        pret_materiel: false,
-        restitution_materiel: false,
-        utilisateur_id: utilisateur.utilisateur_id,
-        menu_id: Number(menuId),
-        statusHistory: {
-          create: {
-            status: "en attente",
+    const commande = await prisma.$transaction(async (tx) => {
+      const createdCommande = await tx.commande.create({
+        data: {
+          numero_commande: `CMD-${Date.now()}`,
+          date_commande: new Date(),
+          date_prestation: new Date(datePrestation),
+          heure_livraison: heureLivraison,
+          prix_menu: prixMenu,
+          nombre_personne: Number(nombrePersonne),
+          prix_livraison: livraisonPrice,
+          statut: "en attente",
+          pret_materiel: false,
+          restitution_materiel: false,
+          utilisateur_id: utilisateur.utilisateur_id,
+          menu_id: Number(menuId),
+          statusHistory: {
+            create: {
+              status: "en attente",
+            },
           },
         },
-      },
-    });
+      });
 
-    const mongoDb = await getMongoDb();
-
-    await mongoDb.collection("order_stats").insertOne({
-      commandeId: commande.commande_id,
-      numeroCommande: commande.numero_commande,
-
-      menuId: menu.menu_id,
-      menuTitre: menu.titre,
-
-      utilisateurId: utilisateur.utilisateur_id,
-
-      nombrePersonne: Number(nombrePersonne),
-      prixMenu,
-      prixLivraison: livraisonPrice,
-      total: prixMenu + livraisonPrice,
-
-      statut: "en attente",
-      dateCommande: new Date(),
-      datePrestation: new Date(datePrestation),
-    });
-
-    await prisma.menu.update({
-      where: {
-        menu_id: Number(menuId),
-      },
-      data: {
-        quantite_restante: {
-          decrement: 1,
+      await tx.menu.update({
+        where: {
+          menu_id: Number(menuId),
         },
-      },
+        data: {
+          quantite_restante: {
+            decrement: 1,
+          },
+        },
+      });
+
+      return createdCommande;
     });
 
-    return NextResponse.json({
-      message: "Commande créée avec succès.",
-      commandeId: commande.commande_id,
-      numero: commande.numero_commande,
-    });
+    try {
+      const mongoDb = await getMongoDb();
+
+      await mongoDb.collection("order_stats").insertOne({
+        commandeId: commande.commande_id,
+        numeroCommande: commande.numero_commande,
+
+        menuId: menu.menu_id,
+        menuTitre: menu.titre,
+
+        utilisateurId: utilisateur.utilisateur_id,
+
+        nombrePersonne: Number(nombrePersonne),
+        prixMenu,
+        prixLivraison: livraisonPrice,
+        total: prixMenu + livraisonPrice,
+
+        statut: "en attente",
+        dateCommande: new Date(),
+        datePrestation: new Date(datePrestation),
+      });
+    } catch (mongoError) {
+      console.error("CREATE ORDER MONGO ERROR:", mongoError);
+    }
+
+    return NextResponse.json(
+      {
+        message: "Commande créée avec succès.",
+        commandeId: commande.commande_id,
+        numero: commande.numero_commande,
+      },
+      { status: 201 },
+    );
   } catch (error) {
     console.error("CREATE ORDER ERROR:", error);
 
