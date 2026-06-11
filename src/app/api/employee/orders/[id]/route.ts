@@ -99,44 +99,50 @@ export async function PUT(
       },
     });
 
-    const mongoDb = await getMongoDb();
+    try {
+      const mongoDb = await getMongoDb();
 
-    if (statut === "terminée") {
-      await mongoDb.collection("order_stats").updateOne(
-        {
-          commandeId: commande.commande_id,
-        },
-        {
-          $set: {
+      if (statut === "terminée") {
+        await mongoDb.collection("order_stats").updateOne(
+          {
             commandeId: commande.commande_id,
-            numeroCommande: commande.numero_commande,
-
-            menuId: commande.menu.menu_id,
-            menuTitre: commande.menu.titre,
-
-            utilisateurId: commande.utilisateur.utilisateur_id,
-            client: `${commande.utilisateur.prenom} ${commande.utilisateur.nom}`,
-
-            nombrePersonne: commande.nombre_personne,
-            prixMenu: commande.prix_menu,
-            prixLivraison: commande.prix_livraison,
-            total: commande.prix_menu + commande.prix_livraison,
-
-            statut: commande.statut,
-            dateCommande: commande.date_commande,
-            datePrestation: commande.date_prestation,
-            dateTerminee: new Date(),
           },
-        },
-        {
-          upsert: true,
-        },
-      );
-    } else {
-      await mongoDb.collection("order_stats").deleteOne({
-        commandeId: commande.commande_id,
-      });
+          {
+            $set: {
+              commandeId: commande.commande_id,
+              numeroCommande: commande.numero_commande,
+
+              menuId: commande.menu.menu_id,
+              menuTitre: commande.menu.titre,
+
+              utilisateurId: commande.utilisateur.utilisateur_id,
+              client: `${commande.utilisateur.prenom} ${commande.utilisateur.nom}`,
+
+              nombrePersonne: commande.nombre_personne,
+              prixMenu: commande.prix_menu,
+              prixLivraison: commande.prix_livraison,
+              total: commande.prix_menu + commande.prix_livraison,
+
+              statut: commande.statut,
+              dateCommande: commande.date_commande,
+              datePrestation: commande.date_prestation,
+              dateTerminee: new Date(),
+            },
+          },
+          {
+            upsert: true,
+          },
+        );
+      } else {
+        await mongoDb.collection("order_stats").deleteOne({
+          commandeId: commande.commande_id,
+        });
+      }
+    } catch (mongoError) {
+      console.error("UPDATE ORDER STATUS MONGO ERROR:", mongoError);
     }
+
+    let mailSent = false;
 
     if (statut === "terminée" && oldCommande.statut !== "terminée") {
       try {
@@ -145,35 +151,19 @@ export async function PUT(
           prenom: commande.utilisateur.prenom,
           numeroCommande: commande.numero_commande,
         });
+
+        mailSent = true;
       } catch (mailError) {
         console.error("SEND ORDER FINISHED EMAIL ERROR:", mailError);
-
-        return NextResponse.json({
-          message:
-            "Statut mis à jour, mais le mail de notification n'a pas pu être envoyé.",
-          order: {
-            id: commande.commande_id,
-            numero: commande.numero_commande,
-            client: `${commande.utilisateur.prenom} ${commande.utilisateur.nom}`,
-            email: commande.utilisateur.email,
-            telephone: commande.utilisateur.telephone,
-            menu: commande.menu.titre,
-            date: new Date(commande.date_prestation).toLocaleDateString(
-              "fr-FR",
-            ),
-            heure: commande.heure_livraison,
-            total: `${commande.prix_menu + commande.prix_livraison} €`,
-            statut: commande.statut,
-            materiel: commande.pret_materiel,
-          },
-        });
       }
     }
 
     return NextResponse.json({
       message:
         statut === "terminée"
-          ? "Commande terminée. Le client a été notifié par mail."
+          ? mailSent
+            ? "Commande terminée. Le client a été notifié par mail."
+            : "Commande terminée. Le mail de notification n'a pas pu être envoyé."
           : "Statut de commande mis à jour.",
       order: {
         id: commande.commande_id,
