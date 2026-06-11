@@ -285,11 +285,23 @@ export default function Menu() {
     }
   };
 
+  const themeOptions = Array.from(
+    new Set(menus.map((menu) => menu.theme).filter(Boolean)),
+  );
+
+  const regimeOptions = Array.from(
+    new Set(menus.map((menu) => menu.regime).filter(Boolean)),
+  );
+
   return (
     <main className="font-family-Inter">
       <div className="MenuMainTitle">
         <h1>Menu</h1>
-        <FilterSelect onFilterChange={setFilters} />
+        <FilterSelect
+          onFilterChange={setFilters}
+          themes={themeOptions}
+          regimes={regimeOptions}
+        />
         <div className="MenuBoard">
           {loadingMenus ? (
             <p>Chargement des menus...</p>
