@@ -4,29 +4,20 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const adminPassword = "Admin123!";
-  const hashedAdminPassword = await bcrypt.hash(adminPassword, 10);
+  const hashedPassword = await bcrypt.hash("Admin123!", 10);
 
-  const userRole = await prisma.role.upsert({
-    where: {
-      role_id: 1,
-    },
-    update: {
-      libelle: "USER",
-    },
+  await prisma.role.upsert({
+    where: { role_id: 1 },
+    update: { libelle: "USER" },
     create: {
       role_id: 1,
       libelle: "USER",
     },
   });
 
-  const employeeRole = await prisma.role.upsert({
-    where: {
-      role_id: 2,
-    },
-    update: {
-      libelle: "EMPLOYEE",
-    },
+  await prisma.role.upsert({
+    where: { role_id: 2 },
+    update: { libelle: "EMPLOYEE" },
     create: {
       role_id: 2,
       libelle: "EMPLOYEE",
@@ -34,12 +25,8 @@ async function main() {
   });
 
   const adminRole = await prisma.role.upsert({
-    where: {
-      role_id: 3,
-    },
-    update: {
-      libelle: "ADMIN",
-    },
+    where: { role_id: 3 },
+    update: { libelle: "ADMIN" },
     create: {
       role_id: 3,
       libelle: "ADMIN",
@@ -51,9 +38,9 @@ async function main() {
       email: "admin@vitegourmand.fr",
     },
     update: {
-      password: hashedAdminPassword,
-      prenom: ".",
-      nom: ".",
+      password: hashedPassword,
+      prenom: "Julie",
+      nom: "Admin",
       telephone: "0000000000",
       ville: "Bordeaux",
       pays: "France",
@@ -62,10 +49,10 @@ async function main() {
       role_id: adminRole.role_id,
     },
     create: {
-      email: "Lucasvanhoute07@gmail.com",
-      password: hashedAdminPassword,
-      prenom: ".",
-      nom: ".",
+      email: "admin@vitegourmand.fr",
+      password: hashedPassword,
+      prenom: "Julie",
+      nom: "AdminAdmin",
       telephone: "0000000000",
       ville: "Bordeaux",
       pays: "France",
@@ -75,17 +62,14 @@ async function main() {
     },
   });
 
-  console.log("Seed terminé avec succès.");
-  console.log("Rôles créés :", {
-    user: userRole.libelle,
-    employee: employeeRole.libelle,
-    admin: adminRole.libelle,
-  });
+  console.log("Seed terminé.");
+  console.log("Admin créé : admin@vitegourmand.fr");
+  console.log("Mot de passe : Admin123!");
 }
 
 main()
   .catch((error) => {
-    console.error("Erreur seed :", error);
+    console.error("Erreur pendant le seed :", error);
     process.exit(1);
   })
   .finally(async () => {

@@ -1,36 +1,324 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vite & Gourmand — Installation et déploiement local
 
-## Getting Started
+## 1. Présentation du projet
 
-First, run the development server:
+**Vite & Gourmand** est une application web de traiteur développée avec **Next.js**, **TypeScript**, **Prisma**, **PostgreSQL** et **MongoDB**.
+
+L’application permet :
+
+- aux visiteurs de consulter les menus ;
+- aux utilisateurs inscrits de passer commande ;
+- aux employés de gérer les menus, les commandes, les horaires et les avis ;
+- à l’administrateur de gérer les employés et de consulter les statistiques NoSQL.
+
+---
+
+## 2. Prérequis
+
+Avant d’installer le projet, vérifier que les outils suivants sont installés :
+
+- Node.js
+- pnpm
+- PostgreSQL
+- MongoDB ou MongoDB Atlas
+- Git
+
+Vérifier les versions :
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+node -v
+pnpm -v
+git --version
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 3. Récupération du projet
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Cloner le dépôt GitHub :
 
-## Learn More
+```bash
+git clone https://github.com/Luvan59/ECF-Developpeur-Web-et-Web-Mobile.git
+```
 
-To learn more about Next.js, take a look at the following resources:
+Entrer dans le dossier du projet :
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+cd my-app
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Installer les dépendances :
 
-## Deploy on Vercel
+```bash
+pnpm install
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 4. Configuration des variables d’environnement
+
+Créer un fichier `.env` à la racine du projet.
+
+Exemple de configuration :
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/vite_gourmand"
+
+JWT_SECRET="une_phrase_secrete_longue"
+
+APP_URL="http://localhost:3000"
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+
+MONGODB_URI="mongodb://localhost:27017"
+MONGODB_DB="vite_gourmand_nosql"
+
+SMTP_HOST="smtp.gmail.com"
+SMTP_PORT="587"
+SMTP_USER="votre_email@gmail.com"
+SMTP_PASSWORD="mot_de_passe_application_google"
+SMTP_FROM="Vite & Gourmand <votre_email@gmail.com>"
+
+CLOUDINARY_CLOUD_NAME="votre_cloud_name"
+CLOUDINARY_API_KEY="votre_api_key"
+CLOUDINARY_API_SECRET="votre_api_secret"
+```
+
+Les variables importantes sont :
+
+- `DATABASE_URL` : connexion à la base PostgreSQL ;
+- `JWT_SECRET` : clé utilisée pour sécuriser les tokens de connexion ;
+- `MONGODB_URI` : connexion à MongoDB pour les statistiques NoSQL ;
+- `SMTP_*` : configuration de l’envoi des mails ;
+- `CLOUDINARY_*` : configuration de l’hébergement des images.
+
+---
+
+## 5. Initialisation de la base PostgreSQL
+
+Générer le client Prisma :
+
+```bash
+pnpm prisma generate
+```
+
+Appliquer les migrations :
+
+```bash
+pnpm prisma migrate dev
+```
+
+Lancer le seed pour créer les rôles et le compte administrateur :
+
+```bash
+pnpm prisma db seed
+```
+
+Compte administrateur par défaut :
+
+```txt
+Email : admin@vitegourmand.fr
+Mot de passe : Admin123!
+```
+
+---
+
+## 6. Configuration du seed Prisma
+
+Le fichier `prisma/seed.ts` permet de créer les données de base nécessaires au fonctionnement de l’application :
+
+- rôle `USER` ;
+- rôle `EMPLOYEE` ;
+- rôle `ADMIN` ;
+- compte administrateur.
+
+Le fichier `package.json` doit contenir :
+
+```json
+"prisma": {
+  "seed": "tsx prisma/seed.ts"
+}
+```
+
+Si `tsx` n’est pas installé :
+
+```bash
+pnpm add -D tsx
+```
+
+---
+
+## 7. Lancement du projet en local
+
+Démarrer le serveur de développement :
+
+```bash
+pnpm dev
+```
+
+L’application sera disponible à l’adresse :
+
+```txt
+http://localhost:3000
+```
+
+---
+
+## 8. Vérification du bon fonctionnement
+
+Après le lancement local, vérifier les pages principales :
+
+```txt
+http://localhost:3000
+http://localhost:3000/menu
+http://localhost:3000/login
+http://localhost:3000/register
+http://localhost:3000/account
+http://localhost:3000/employee
+http://localhost:3000/admin
+```
+
+Pour accéder à l’espace administrateur :
+
+```txt
+Email : admin@vitegourmand.fr
+Mot de passe : Admin123!
+```
+
+---
+
+## 9. Build de production local
+
+Avant tout déploiement, vérifier que le projet compile correctement :
+
+```bash
+pnpm run build
+```
+
+Si le build réussit, lancer la version de production locale :
+
+```bash
+pnpm start
+```
+
+Le site sera accessible sur :
+
+```txt
+http://localhost:3000
+```
+
+---
+
+## 10. Commandes utiles Prisma
+
+Ouvrir Prisma Studio :
+
+```bash
+pnpm prisma studio
+```
+
+Créer une nouvelle migration après modification du schéma :
+
+```bash
+pnpm prisma migrate dev --name nom_de_la_migration
+```
+
+Générer le client Prisma :
+
+```bash
+pnpm prisma generate
+```
+
+Relancer le seed :
+
+```bash
+pnpm prisma db seed
+```
+
+---
+
+## 11. MongoDB / NoSQL
+
+MongoDB est utilisé pour stocker les statistiques des commandes.
+
+En local, il est possible d’utiliser :
+
+```env
+MONGODB_URI="mongodb://localhost:27017"
+MONGODB_DB="vite_gourmand_nosql"
+```
+
+La base et les collections MongoDB sont créées automatiquement lorsque l’application écrit une donnée.
+
+Exemple de collection utilisée :
+
+```txt
+order_stats
+```
+
+---
+
+## 12. Cloudinary
+
+Cloudinary est utilisé pour stocker les images des menus.
+
+Cela permet d’éviter d’enregistrer les images directement dans le dossier `public/uploads`, ce qui n’est pas adapté à un environnement de production.
+
+Variables nécessaires :
+
+```env
+CLOUDINARY_CLOUD_NAME="votre_cloud_name"
+CLOUDINARY_API_KEY="votre_api_key"
+CLOUDINARY_API_SECRET="votre_api_secret"
+```
+
+---
+
+## 13. Envoi de mails
+
+L’application utilise un service SMTP pour envoyer les mails, notamment pour :
+
+- la réinitialisation de mot de passe ;
+- les notifications de commande.
+
+Avec Gmail, il faut utiliser un **mot de passe d’application Google**, et non le mot de passe classique du compte Gmail.
+
+Variables nécessaires :
+
+```env
+SMTP_HOST="smtp.gmail.com"
+SMTP_PORT="587"
+SMTP_USER="votre_email@gmail.com"
+SMTP_PASSWORD="mot_de_passe_application_google"
+SMTP_FROM="Vite & Gourmand <votre_email@gmail.com>"
+```
+
+---
+
+## 14. Résumé des commandes principales
+
+```bash
+pnpm install
+pnpm prisma generate
+pnpm prisma migrate dev
+pnpm prisma db seed
+pnpm dev
+```
+
+Pour tester le build :
+
+```bash
+pnpm run build
+pnpm start
+```
+
+---
+
+## 15. Identifiants de test
+
+Compte administrateur :
+
+```txt
+Email : admin@vitegourmand.fr
+Mot de passe : Admin123!
+```
+
