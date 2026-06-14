@@ -1409,6 +1409,7 @@ export default function EmployeePage() {
                   <label>Prix par personne (€)</label>
                   <input
                     type="number"
+                    min="0"
                     value={menuForm.prix}
                     onChange={(e) =>
                       setMenuForm({ ...menuForm, prix: e.target.value })
@@ -1420,6 +1421,7 @@ export default function EmployeePage() {
                   <label>Nombre minimum de personnes</label>
                   <input
                     type="number"
+                    min="1"
                     value={menuForm.minimum}
                     onChange={(e) =>
                       setMenuForm({ ...menuForm, minimum: e.target.value })
@@ -1431,6 +1433,7 @@ export default function EmployeePage() {
                   <label>Nombre de commandes restantes</label>
                   <input
                     type="number"
+                    min="0"
                     value={menuForm.stock}
                     onChange={(e) =>
                       setMenuForm({ ...menuForm, stock: e.target.value })
