@@ -564,6 +564,47 @@
   font-weight: 800;
 }
 
+.OrderSubmitWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.OrderLoadingBox {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  background: #fff7eb;
+  border: 1px solid rgba(255, 157, 0, 0.35);
+  color: #9a5f00;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.OrderSpinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 157, 0, 0.25);
+  border-top-color: #ff9d00;
+  border-radius: 50%;
+  animation: orderSpin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes orderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ValidateOrderButton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
 @media (max-width: 900px) {
   .OrderDrawer {
     width: 100%;

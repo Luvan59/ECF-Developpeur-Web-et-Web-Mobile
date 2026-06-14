@@ -9,6 +9,7 @@ import TagItemRed from "@/components/tag_item_red/tag_item_red";
 import TagItemGreen from "@/components/tag_item_green/tag_item_green";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useLoadingStore } from "@/lib/loadingstore";
 
 type MenuType = {
   id: number;
@@ -50,6 +51,8 @@ export default function Menu() {
 
   const [menus, setMenus] = useState<MenuType[]>([]);
   const [loadingMenus, setLoadingMenus] = useState(true);
+
+  const { startLoading, stopLoading } = useLoadingStore();
 
   const formatPrice = (price: number) => price.toFixed(2);
 
@@ -237,6 +240,8 @@ export default function Menu() {
       return;
     }
 
+    startLoading("Création de votre commande...");
+
     try {
       const response = await fetch("/api/orders", {
         method: "POST",
@@ -275,13 +280,13 @@ export default function Menu() {
       toast.success("Commande créée avec succès.");
 
       setOrderDrawerOpen(false);
-
-      // reset éventuel
       setOrderMenu(null);
       setQuantity(1);
     } catch (error) {
       console.error(error);
       toast.error("Erreur lors de la création de la commande.");
+    } finally {
+      stopLoading();
     }
   };
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Toaster } from "react-hot-toast";
 import { prisma } from "@/lib/prisma";
 import Header from "@/components/header/header";
+import LoadingOverlay from "@/components/loading-overlay/LoadingOverlay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -88,6 +89,7 @@ export default async function RootLayout({
             </div>
           </div>
         </footer>
+        <LoadingOverlay />
       </body>
     </html>
   );
